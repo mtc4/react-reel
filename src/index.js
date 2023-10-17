@@ -20,7 +20,7 @@ class Numbers extends PureComponent {
     duration: PropTypes.number,
     /** @type {object} theme - react-themeable */
 
-    theme: PropTypes.func,
+    theme: PropTypes.func
   };
 
   static defaultProps = {
@@ -28,7 +28,7 @@ class Numbers extends PureComponent {
     number: 0,
     delay: 0,
     duration: 700,
-    height: 1,
+    height: 1
   };
 
   constructor(props) {
@@ -57,12 +57,12 @@ class Numbers extends PureComponent {
     const style = {
       transitionDuration: `${duration}ms`,
       transitionDelay: `${delay}ms`,
-      transform: `translate(0, ${display}em)`,
+      transform: `translate(0, ${display}em)`
     };
 
     return (
       <div {...theme(2, "group")} style={style}>
-        {values.map((v) => (
+        {values.map(v => (
           <div key={v} {...theme(v, "number")}>
             {v}
           </div>
@@ -83,9 +83,9 @@ class Reels extends PureComponent {
     return number
       .toString()
       .split("")
-      .map((n) => parseInt(n, 10));
+      .map(n => parseInt(n, 10));
   }
-  static stripNonNumbers = (str) => str && (str.match(/\d/g) || []).join("");
+  static stripNonNumbers = str => str && (str.match(/\d/g) || []).join("");
 
   static propTypes = {
     /** @type {string} text */
@@ -97,13 +97,13 @@ class Reels extends PureComponent {
     /** @type {{reel: string, group: string, number: string}} theme - react-themeable */
     theme: PropTypes.any,
     /** @type {number} - translate Y axis by reel value × height */
-    height: PropTypes.number,
+    height: PropTypes.number
   };
 
   static defaultProps = {
     duration: 700,
     delay: 85,
-    theme: defaultTheme,
+    theme: defaultTheme
   };
 
   constructor(props) {
@@ -137,7 +137,7 @@ class Reels extends PureComponent {
 
     return {
       text: nextProps.text,
-      delayArray,
+      delayArray
     };
   }
 
@@ -163,9 +163,10 @@ class Reels extends PureComponent {
    * This method handles the render cycle of each reel
    * @param parts
    * @param theme
+   * @param height
    * @return {*}
    */
-  renderReels = (parts, theme) => {
+  renderReels = (parts, theme, height) => {
     let ind = 0;
     let strInd = 0;
     const { duration } = this.props;
@@ -178,7 +179,7 @@ class Reels extends PureComponent {
           // both integers and fractions contain numbers we want to spin
           return (
             <React.Fragment key={type + partIndex}>
-              {Reels.getNumbers(value).map((number) => {
+              {Reels.getNumbers(value).map(number => {
                 const output = (
                   <Numbers
                     theme={theme}
@@ -215,7 +216,7 @@ class Reels extends PureComponent {
    * @param text
    * @return {Array<{type: string, value: string}>} Parts array
    */
-  getParts = (text) => {
+  getParts = text => {
     const parts = [];
 
     let lastType = null;
@@ -242,11 +243,12 @@ class Reels extends PureComponent {
   render() {
     const theme = themeable(this.props.theme);
     const parts = this.getParts(this.props.text);
+    const height = this.props.height || 1;
 
     return (
       <div aria-label={this.props.text} {...theme(0, "container")}>
         <div role="presentation" {...theme(1, "reel")}>
-          {this.renderReels(parts, theme)}
+          {this.renderReels(parts, theme, height)}
         </div>
       </div>
     );
