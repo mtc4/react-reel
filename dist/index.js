@@ -370,7 +370,7 @@ function (_PureComponent2) {
 
     _this3 = possibleConstructorReturn(this, getPrototypeOf(Reels).call(this, props));
 
-    defineProperty(assertThisInitialized(assertThisInitialized(_this3)), "renderReels", function (parts, theme) {
+    defineProperty(assertThisInitialized(assertThisInitialized(_this3)), "renderReels", function (parts, theme, height) {
       var ind = 0;
       var strInd = 0;
       var duration = _this3.props.duration;
@@ -472,6 +472,7 @@ function (_PureComponent2) {
      * This method handles the render cycle of each reel
      * @param parts
      * @param theme
+     * @param height
      * @return {*}
      */
 
@@ -480,11 +481,12 @@ function (_PureComponent2) {
     value: function render() {
       var theme = themeable(this.props.theme);
       var parts = this.getParts(this.props.text);
+      var height = this.props.height || 1;
       return React__default.createElement("div", _extends_1({
         "aria-label": this.props.text
       }, theme(0, "container")), React__default.createElement("div", _extends_1({
         role: "presentation"
-      }, theme(1, "reel")), this.renderReels(parts, theme)));
+      }, theme(1, "reel")), this.renderReels(parts, theme, height)));
     }
   }], [{
     key: "getDerivedStateFromProps",
